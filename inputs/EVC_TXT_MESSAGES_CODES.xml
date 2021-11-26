@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Text_Messages>
+	<TXT_MESS code="1" text="Emergency brake command error"/>
+	<TXT_MESS code="2" text="Service brake applied due to IO failure"/>
+	<TXT_MESS code="3" text="Pneumatic insertion error"/>
+	<TXT_MESS code="4" text="Service brake command error"/>
+	<TXT_MESS code="5" text="Service brake release error"/>
+	<TXT_MESS code="6" text="Traction cut off error"/>
+	<TXT_MESS code="7" text="Missed balise in the balise group"/>
+	<TXT_MESS code="9" text="Route unsuitable - loading gauge"/>
+	<TXT_MESS code="10" text="Route unsuitable - traction system"/>
+	<TXT_MESS code="11" text="Route unsuitable - axle load category"/>
+	<TXT_MESS code="12" text="Emergency brake tests are busy"/>
+	<TXT_MESS code="13" text="Emergency brake tests are aborted"/>
+	<TXT_MESS code="14" text="Emergency brake tests are OK"/>
+	<TXT_MESS code="15" text="Emergency brake tests are not OK"/>
+	<TXT_MESS code="16" text="UTC time not available"/>
+	<TXT_MESS code="17" text="Time when storing VBC is unknown"/>
+	<TXT_MESS code="18" text="Expired VBC has been deleted"/>
+	<TXT_MESS code="89" text="ATC needs data"/>
+</Text_Messages>

@@ -1,0 +1,16 @@
+
+Cisco:
+	-User: at-yabe
+	-Pass: Coucou_2501
+	-IP: 5.179.92.3
+	-Profile: alstom
+
+Tight VNC:
+	-Remote host: 172.21.251.14::3389
+	-Password: Alstom123
+	
+Bureau distance
+	- 172.21.251.14
+	- BDK_RMR_123
+	
+	

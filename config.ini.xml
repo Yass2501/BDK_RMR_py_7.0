@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<Parameters>
+	<Trains>
+		<OBU obu_name="NJ LINT41 653 683"/>
+		<!--FLEET obu_fleet="NJ Desiro"/>
+		<FLEET obu_fleet="NJ LINT41"/>
+		<OBU obu_name="NJ LINT41 653 683"/-->
+	</Trains>
+	<Period>
+		<DATE t0="11-10-2021" tend="12-10-2021"/>
+	</Period>
+	<Analysis>
+		<LOG type="COMET_INIT"/>
+		<LOG type="RMR_PERIODIC"/>
+		<LOG type="JRU"/>
+		<LOG type="DRU"/>
+	</Analysis>
+</Parameters>
