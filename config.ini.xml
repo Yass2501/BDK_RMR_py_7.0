@@ -7,7 +7,7 @@
 		<OBU obu_name="NJ LINT41 653 683"/-->
 	</Trains>
 	<Period>
-		<DATE t0="11-10-2021" tend="12-10-2021"/>
+		<DATE t0="11-10-2021" tend="13-10-2021"/>
 	</Period>
 	<Analysis>
 		<LOG type="COMET_INIT"/>
