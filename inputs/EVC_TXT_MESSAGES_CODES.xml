@@ -10,12 +10,200 @@
 	<TXT_MESS code="9" text="Route unsuitable - loading gauge"/>
 	<TXT_MESS code="10" text="Route unsuitable - traction system"/>
 	<TXT_MESS code="11" text="Route unsuitable - axle load category"/>
-	<TXT_MESS code="12" text="Emergency brake tests are busy"/>
-	<TXT_MESS code="13" text="Emergency brake tests are aborted"/>
-	<TXT_MESS code="14" text="Emergency brake tests are OK"/>
-	<TXT_MESS code="15" text="Emergency brake tests are not OK"/>
+	<TXT_MESS code="12" text="Emergency brake tests are busy "/>
+	<TXT_MESS code="13" text="Emergency brake tests are aborted "/>
+	<TXT_MESS code="14" text="Emergency brake tests are OK "/>
+	<TXT_MESS code="15" text="Emergency brake tests are not OK "/>
 	<TXT_MESS code="16" text="UTC time not available"/>
 	<TXT_MESS code="17" text="Time when storing VBC is unknown"/>
 	<TXT_MESS code="18" text="Expired VBC has been deleted"/>
-	<TXT_MESS code="89" text="ATC needs data"/>
+	<TXT_MESS code="19" text="Emergency stop"/>
+	<TXT_MESS code="20" text="Conditional emergency stop "/>
+	<TXT_MESS code="21" text="Shunting mode request sent "/>
+	<TXT_MESS code="22" text="SH refused "/>
+	<TXT_MESS code="23" text="SH request failed"/>
+	<TXT_MESS code="24" text="Shunting mode request to RBC impossible"/>
+	<TXT_MESS code="25" text="Trackside not compatible"/>
+	<TXT_MESS code="26" text="Balise group data inconsistency "/>
+	<TXT_MESS code="27" text="Balise linking error"/>
+	<TXT_MESS code="28" text="Runaway movement"/>
+	<TXT_MESS code="31" text="Reversing mode permitted "/>
+	<TXT_MESS code="37" text="Entering FS"/>
+	<TXT_MESS code="38" text="Entering OS"/>
+	<TXT_MESS code="39" text="SH stop order"/>
+	<TXT_MESS code="40" text="SR stop order"/>
+	<TXT_MESS code="41" text="Unexpected balise group in Shunting "/>
+	<TXT_MESS code="42" text="Unexpected balise group in Staff Respons."/>
+	<TXT_MESS code="43" text="RV distance exceeded"/>
+	<TXT_MESS code="44" text="Overpassing distance to run in Post Trip"/>
+	<TXT_MESS code="45" text="RBC version not compatible"/>
+	<TXT_MESS code="46" text="Radio link supervision error "/>
+	<TXT_MESS code="47" text="Train is rejected"/>
+	<TXT_MESS code="49" text="Selection no more available "/>
+	<TXT_MESS code="50" text="No track condition will be received "/>
+	<TXT_MESS code="53" text="STM Available"/>
+	<TXT_MESS code="54" text="STM Failed"/>
+	<TXT_MESS code="55" text="Failure of DRU "/>
+	<TXT_MESS code="56" text="Failure of JRU "/>
+	<TXT_MESS code="57" text="Radio Total Failure"/>
+	<TXT_MESS code="58" text="Power up tests ongoing"/>
+	<TXT_MESS code="59" text="Power up tests failed"/>
+	<TXT_MESS code="60" text="Power up tests successful "/>
+	<TXT_MESS code="61" text="Power up tests OK with low availability "/>
+	<TXT_MESS code="62" text="Overspeed: Emergency brakes applied "/>
+	<TXT_MESS code="63" text="Overspeed: Service brakes applied "/>
+	<TXT_MESS code="64" text="JRU Lost "/>
+	<TXT_MESS code="65" text="JRU recovered "/>
+	<TXT_MESS code="70" text="Packet 44 decoding error, SB applied "/>
+	<TXT_MESS code="71" text="Com session terminated without RBC ack "/>
+	<TXT_MESS code="78" text="Tilting problem"/>
+	<TXT_MESS code="79" text="Tilting problem"/>
+	<TXT_MESS code="80" text="Packet 44 decoding error"/>
+	<TXT_MESS code="81" text="Train running number"/>
+	<TXT_MESS code="82" text="Driver ID"/>
+	<TXT_MESS code="83" text="Awaiting Driver ID"/>
+	<TXT_MESS code="84" text="Driver PT selection awaited "/>
+	<TXT_MESS code="85" text="Failure of TRU"/>
+	<TXT_MESS code="86" text="STM Brake demand"/>
+	<TXT_MESS code="88" text="STM Is not available"/>
+	<TXT_MESS code="89" text="STM Needs data"/>
+	<TXT_MESS code="90" text="Emergency brakes are partially not OK"/>
+	<TXT_MESS code="91" text="Com. termination not rec. after RBC area"/>
+	<TXT_MESS code="92" text="2 consecutive balise groups not detected"/>
+	<TXT_MESS code="93" text="Recep. 2 successive reloc. balise groups"/>
+	<TXT_MESS code="94" text="Please wait communication termination"/>
+	<TXT_MESS code="95" text="Availability decrease due to extern eqpt"/>
+	<TXT_MESS code="97" text="Radio message sequence error"/>
+	<TXT_MESS code="98" text="Radio message decoding error"/>
+	<TXT_MESS code="99" text="Unknown LRBG reference sent by RBC"/>
+	<TXT_MESS code="100" text="Balise message decoding error"/>
+	<TXT_MESS code="101" text="Invalid Driver identity"/>
+	<TXT_MESS code="102" text="Invalid Train number"/>
+	<TXT_MESS code="103" text="Invalid Level"/>
+	<TXT_MESS code="105" text="Both directions are selected"/>
+	<TXT_MESS code="106" text="Service brake command in Shunting mode"/>
+	<TXT_MESS code="107" text="Service brake command in Post Trip mode"/>
+	<TXT_MESS code="108" text="Wrong position of changeover switch"/>
+	<TXT_MESS code="109" text="At least one circuit breaker is open"/>
+	<TXT_MESS code="110" text="STM DK isolation failure"/>
+	<TXT_MESS code="111" text="STM SE isolation failure"/>
+	<TXT_MESS code="112" text="STM DK presence failure"/>
+	<TXT_MESS code="113" text="STM DK not available"/>
+	<TXT_MESS code="114" text="IO10_MONITORING_ERROR"/>
+	<TXT_MESS code="115" text="IO11_MONITORING_ERROR"/>
+	<TXT_MESS code="116" text="IO12_MONITORING_ERROR"/>
+	<TXT_MESS code="117" text="IO13_MONITORING_ERROR"/>
+	<TXT_MESS code="118" text="IO14_MONITORING_ERROR"/>
+	<TXT_MESS code="119" text="IO15_MONITORING_ERROR"/>
+	<TXT_MESS code="120" text="IO16_MONITORING_ERROR"/>
+	<TXT_MESS code="121" text="IO17_MONITORING_ERROR"/>
+	<TXT_MESS code="122" text="IO18_MONITORING_ERROR"/>
+	<TXT_MESS code="123" text="IO19_MONITORING_ERROR"/>
+	<TXT_MESS code="124" text="IO20_MONITORING_ERROR"/>
+	<TXT_MESS code="125" text="IO21_MONITORING_ERROR"/>
+	<TXT_MESS code="126" text="IO22_MONITORING_ERROR"/>
+	<TXT_MESS code="127" text="IO23_MONITORING_ERROR"/>
+	<TXT_MESS code="128" text="IO24_MONITORING_ERROR"/>
+	<TXT_MESS code="129" text="IO25_MONITORING_ERROR"/>
+	<TXT_MESS code="130" text="IO26_MONITORING_ERROR"/>
+	<TXT_MESS code="131" text="IO27_MONITORING_ERROR"/>
+	<TXT_MESS code="132" text="IO28_MONITORING_ERROR"/>
+	<TXT_MESS code="133" text="IO29_MONITORING_ERROR"/>
+	<TXT_MESS code="134" text="IO30_MONITORING_ERROR"/>
+	<TXT_MESS code="135" text="IO31_MONITORING_ERROR"/>
+	<TXT_MESS code="136" text="Nbr of hours before an EVC reset"/>
+	<TXT_MESS code="137" text="From now on, the EVC must be reset"/>
+	<TXT_MESS code="138" text="Maintenance data entry is mandatory"/>
+	<TXT_MESS code="139" text="Wrong panto position for track cond."/>
+	<TXT_MESS code="140" text="Wrong circ. breaker state for track cond"/>
+	<TXT_MESS code="141" text="Wrong traction state for track cond. "/>
+	<TXT_MESS code="142" text="HW Plug configuration Discrepancy"/>
+	<TXT_MESS code="143" text="Safe Data discrepancy"/>
+	<TXT_MESS code="144" text="EVC Reconfigured"/>
+	<TXT_MESS code="145" text="Invalid start-up configuration"/>
+	<TXT_MESS code="146" text="EVC Not configured"/>
+	<TXT_MESS code="147" text="Safe Data Reconfigured"/>
+	<TXT_MESS code="148" text="Update maintenance parameters failed"/>
+	<TXT_MESS code="149" text="Update maintenance parameters success"/>
+	<TXT_MESS code="151" text="EOA or LOA crossed"/>
+	<TXT_MESS code="153" text="Former EOA or LOA crossed"/>
+	<TXT_MESS code="155" text="Unauthorized passing of EOA / LOA"/>
+	<TXT_MESS code="157" text="No track description"/>
+	<TXT_MESS code="159" text="SR distance exceeded"/>
+	<TXT_MESS code="161" text="No MA received at level transition"/>
+	<TXT_MESS code="163" text="Balise group in unexpected direction"/>
+	<TXT_MESS code="170" text="The DMI stack for text messages is full - reset"/>
+	<TXT_MESS code="171" text="Euroloop message decoding error"/>
+	<TXT_MESS code="172" text="Failure of Euroloop receiver equipment"/>
+	<TXT_MESS code="173" text="2 consecutive balise groups misplaced"/>
+	<TXT_MESS code="174" text="Tachy problem: release traction or brake"/>
+	<TXT_MESS code="175" text="Trackside malfunction"/>
+	<TXT_MESS code="176" text="Radio network registration on going"/>
+	<TXT_MESS code="177" text="BG data inconsistency, trackside info"/>
+	<TXT_MESS code="178" text="Balise read error"/>
+	<TXT_MESS code="179" text="HW Plug Failure"/>
+	<TXT_MESS code="180" text="HW Plug Empty"/>
+	<TXT_MESS code="181" text="Key management parameters updated by KMC"/>
+	<TXT_MESS code="183" text="Failure of the dialogue with the KMC"/>
+	<TXT_MESS code="184" text="Radio authentification failure"/>
+	<TXT_MESS code="185" text="Activation of ERTMS inhibition"/>
+	<TXT_MESS code="186" text="Deactivation of ERTMS inhibition"/>
+	<TXT_MESS code="187" text="Train data modified new acq requested"/>
+	<TXT_MESS code="188" text="Default national values used"/>
+	<TXT_MESS code="189" text="Default national values used"/>
+	<TXT_MESS code="190" text="Trackside national values used "/>
+	<TXT_MESS code="191" text="Release Speed announced"/>
+	<TXT_MESS code="192" text="Close and open the cabin to recover DMI"/>
+	<TXT_MESS code="193" text="Inconsistent repositioning"/>
+	<TXT_MESS code="194" text="Initialization on-going"/>
+	<TXT_MESS code="195" text="level availability time-out"/>
+	<TXT_MESS code="196" text="Radio network registration failed"/>
+	<TXT_MESS code="200" text="Reaction to a BTM error"/>
+	<TXT_MESS code="201" text="EB test is required"/>
+	<TXT_MESS code="202" text="Test of EB SW command is OK"/>
+	<TXT_MESS code="203" text="Test of EB SW command is Not OK"/>
+	<TXT_MESS code="204" text="No communication with Radio Voice "/>
+	<TXT_MESS code="205" text="Maintenance : Event 2 detected"/>
+	<TXT_MESS code="206" text="Maintenance : Event 3 detected"/>
+	<TXT_MESS code="207" text="Maintenance : Event 4 detected"/>
+	<TXT_MESS code="208" text="Maintenance : Event 5 detected"/>
+	<TXT_MESS code="209" text="Maintenance : Event 6 detected"/>
+	<TXT_MESS code="210" text="Maintenance : Event 7 detected"/>
+	<TXT_MESS code="211" text="Maintenance : Event 8 detected"/>
+	<TXT_MESS code="212" text="Maintenance : Event 9 detected"/>
+	<TXT_MESS code="213" text="Maintenance : Event 10 detected"/>
+	<TXT_MESS code="214" text="Maintenance: Event 11 detected"/>
+	<TXT_MESS code="215" text="Maintenance: Event 12 detected"/>
+	<TXT_MESS code="216" text="Maintenance: Event 13 detected"/>
+	<TXT_MESS code="217" text="Maintenance: Event 14 detected"/>
+	<TXT_MESS code="218" text="Maintenance : Event 15 detected"/>
+	<TXT_MESS code="219" text="Maintenance : Event 16 detected"/>
+	<TXT_MESS code="220" text="Shunting mode refused by STM"/>
+	<TXT_MESS code="222" text="FF329: Havarilog connection lost"/>
+	<TXT_MESS code="223" text="FF329: Havarilog connection lost"/>
+	<TXT_MESS code="224" text="FF248: Discrepancy between EVC speed and Havarilog speed"/>
+	<TXT_MESS code="225" text="FF248: Discrepancy between EVC speed and Havarilog speed"/>
+	<TXT_MESS code="226" text="FF249: Discrepancy between EVC speed and Havarilog speed"/>
+	<TXT_MESS code="227" text="FF249: Discrepancy between EVC speed and Havarilog speed"/>
+	<TXT_MESS code="228" text="Communication is lost with train computer"/>
+	<TXT_MESS code="229" text="Communication is lost with train computer"/>
+	<TXT_MESS code="230" text="Dialogue with the KMC initiated for KMAC request"/>
+	<TXT_MESS code="231" text="Dialogue with the KMC initiated for KTRANS request"/>
+	<TXT_MESS code="232" text="KTRANS updated"/>
+	<TXT_MESS code="233" text="Generation of certificate is on-going"/>
+	<TXT_MESS code="234" text="Generation of certificate failed"/>
+	<TXT_MESS code="235" text="Generation of certificate is successful"/>
+	<TXT_MESS code="236" text="STM EB Test is on-going"/>
+	<TXT_MESS code="237" text="Train data from train computer has changed"/>
+	<TXT_MESS code="238" text="TRU data downloading is on-going"/>
+	<TXT_MESS code="239" text="Reset is needed to update maintenance parameters"/>
+	<TXT_MESS code="240" text="Accelerometer 1 calibration in progress"/>
+	<TXT_MESS code="241" text="Accelerometer 1 calibration succesful"/>
+	<TXT_MESS code="242" text="Accelerometer 1 calibration failed"/>
+	<TXT_MESS code="243" text="Accelerometer 1 calibration aborted"/>
+	<TXT_MESS code="244" text="Accelerometer 2 calibration in progress"/>
+	<TXT_MESS code="245" text="Accelerometer 2 calibration succesful"/>
+	<TXT_MESS code="246" text="Accelerometer 2 calibration failed"/>
+	<TXT_MESS code="247" text="Accelerometer 2 calibration aborted"/>
+	<TXT_MESS code="248" text="Vehicle ID not correct"/>
 </Text_Messages>

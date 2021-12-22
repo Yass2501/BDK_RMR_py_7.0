@@ -44,8 +44,12 @@ def write_DRU_Messages(workbook, worksheet, RMR_Messages):
                 time = DRU_Mess.dru_time_from_bin(DRU_Mess.TIME)
 
                 name = decode_raw_data.OBU_NAME_FROM_OBU_ID(m.OBU_ID)
-
-                worksheet.write(i, 0, name, center_format)
+                
+                if(name == ''):
+                    worksheet.write(i, 0, m.OBU_ID, center_format)
+                else:
+                    worksheet.write(i, 0, name, center_format)
+                
                 worksheet.write(i, 1, date, center_format)
                 worksheet.write(i, 2, time, center_format)
                 if DRU_Mess.DRU_NID_PACKET == 1:

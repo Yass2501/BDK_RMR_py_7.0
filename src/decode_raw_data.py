@@ -1,8 +1,11 @@
-import os
+from os import listdir
 import functions
 import datetime
 from global_variables import *
 import xml.etree.ElementTree as ET
+import bit_bytes_manipulation as bit
+import evc_tru
+
 class RMR_Message(object):
     time_for_sort = 0
     date_for_sort = 0
@@ -119,78 +122,6 @@ class RMR_Message(object):
 ############################ Functions ############################
 
 	
-def extract_and_decode_rawData(Raw_Data_dir,period,Trains_names):
-    
-    date1_int = int(period[0].strftime('%y%m%d'))
-    date2_int = int(period[1].strftime('%y%m%d'))
-
-    obu_ids = []
-    for obu_name in Trains_names:
-        obu_ids.append(OBU_ID_FROM_OBU_NAME(obu_name))
-    print(obu_ids)
-    ListDir   = os.listdir('./'+Raw_Data_dir)  # List all directories present in OBU_proxy
-    Raw_data_decoded = []
-    i_rmr_mess = 0
-    index_G1 = 0
-    index_G1_end = 0
-    dir_flag = 0
-    for directory in ListDir:
-        #print('Directory : '+directory)
-        ListFiles = os.listdir('./'+Raw_Data_dir+'/'+directory)
-        dir_flag = 1
-        for filename in ListFiles:
-            filename_date = filename[2:4]+filename[5:7]+filename[8:10]
-            filename_date_int = int(filename_date)
-            if(date1_int <= filename_date_int < date2_int):
-                if(dir_flag == 1):
-                    print('Directory : '+directory)
-                    dir_flag = 0
-                print('File name : '+filename)
-                f = open('./'+Raw_Data_dir+'/'+directory+'/'+filename,'r+',encoding='latin-1')
-                lines = f.readlines()
-                for i in range(0,len(lines)):
-                    if((lines[i].find('<G1>') != -1)):
-                        k = i
-                        data_str = lines[i]
-                        while((lines[k].find('</G1>') == -1)):
-                            k = k + 1
-                            data_str = data_str + lines[k]
-                        index_G1     = data_str.find('<G1>')
-                        index_G1_end = data_str.find('</G1>')+5
-                        Index        = functions.findIndexof(data_str, ';', 8)
-                        
-                        OBU_LEN       = str(int((data_str[(index_G1+4):(Index[0])]).encode().hex(),16))
-                        OBU_VER       = data_str[(Index[0]+1):Index[1]]
-                        OBU_ID        = data_str[(Index[1]+1):Index[2]]
-                        OBU_ACK       = data_str[(Index[2]+1):Index[3]]
-                        OBU_GPS       = data_str[(Index[3]+1):Index[4]]
-                        OBU_DATA_TYPE = data_str[(Index[4]+1):Index[5]]
-                        OBU_CUSTOM    = data_str[(Index[5]+1):Index[6]]
-                        OBU_DATA_LEN  = data_str[(Index[6]+1):Index[7]]
-                        OBU_DATA      = data_str[(Index[7]+1):index_G1_end-5]
-                        if(Trains_names[0] == 'all'):
-                            obu_data_hex = (OBU_DATA).encode('latin-1').hex()
-                            Raw_data_decoded.append(RMR_Message(OBU_LEN,OBU_VER,OBU_ID,OBU_ACK,OBU_GPS,OBU_DATA_TYPE,OBU_CUSTOM,OBU_DATA_LEN,OBU_DATA))
-                            gps_field = Raw_data_decoded[i_rmr_mess].decode_GPS()
-                            Raw_data_decoded[i_rmr_mess].date_for_sort = functions.dateStringToIntConvert(gps_field[GPS_DATE])
-                            obu_time = gps_field[GPS_TIME]
-                            Raw_data_decoded[i_rmr_mess].time_for_sort = int(obu_time[0:6])
-                            #Raw_data_decoded[i_rmr_mess].print()
-                            i_rmr_mess = i_rmr_mess + 1
-                        else:  
-                            for id in obu_ids:
-                                if(id == OBU_ID):
-                                    obu_data_hex = (OBU_DATA).encode('latin-1').hex()
-                                    Raw_data_decoded.append(RMR_Message(OBU_LEN,OBU_VER,OBU_ID,OBU_ACK,OBU_GPS,OBU_DATA_TYPE,OBU_CUSTOM,OBU_DATA_LEN,OBU_DATA))
-                                    gps_field = Raw_data_decoded[i_rmr_mess].decode_GPS()
-                                    Raw_data_decoded[i_rmr_mess].date_for_sort = functions.dateStringToIntConvert(gps_field[GPS_DATE])
-                                    obu_time = gps_field[GPS_TIME]
-                                    Raw_data_decoded[i_rmr_mess].time_for_sort = int(obu_time[0:6])
-                                    #Raw_data_decoded[i_rmr_mess].print()
-                                    i_rmr_mess = i_rmr_mess + 1
-                                    break
-                f.close()
-    return Raw_data_decoded
 
 
 def extract_and_decode_rawData2(param_file_path):
@@ -254,22 +185,28 @@ def extract_and_decode_rawData2(param_file_path):
     index_G1 = 0
     index_G1_end = 0
 
-    listfiles = os.listdir('../inputs/Raw_Data')
+    listfiles = listdir('../inputs/Raw_Data')
 
     for filename in listfiles:
-        filename_date = filename[2:4] + filename[5:7] + filename[8:10]
+        #filename_date = filename[2:4] + filename[5:7] + filename[8:10]
+        #print(filename_date)
+        filename_date = "".join([filename[2:4] , filename[5:7], filename[8:10]])
+        #print(filename_date)
         filename_date_int = int(filename_date)
         if date1_int <= filename_date_int < date2_int:
             print('File name : ' + filename)
-            f = open('../inputs/Raw_Data' + '/' + filename, 'r+', encoding='latin-1')
+            #f = open('../inputs/Raw_Data' + '/' + filename, 'r+', encoding='latin-1')
+            f = open("".join(['../inputs/Raw_Data' , '/', filename]), 'r+', encoding='latin-1')
             lines = f.readlines()
-            for i in range(0, len(lines)):
+            len_lines = len(lines)
+            for i in range(0, len_lines):
                 if lines[i].find('<G1>') != -1:
                     k = i
                     data_str = lines[i]
                     while lines[k].find('</G1>') == -1:
                         k = k + 1
-                        data_str = data_str + lines[k]
+                        #data_str = data_str + lines[k]
+                        data_str = "".join([data_str ,lines[k]])
                     index_G1 = data_str.find('<G1>')
                     index_G1_end = data_str.find('</G1>') + 5
                     Index = functions.findIndexof(data_str, ';', 8)
@@ -286,6 +223,8 @@ def extract_and_decode_rawData2(param_file_path):
 
                     flag = 0
 
+                    
+                    
                     for an in analysis:
                         if an == 'COMET_INIT' and OBU_DATA_TYPE == '14':
                             flag = 1
@@ -324,6 +263,318 @@ def extract_and_decode_rawData2(param_file_path):
 
     return Raw_data_decoded
 
+def extract_and_decode_rawData3(param_file_path):
+
+    ########################## Loading parameters from XML ##########################
+
+    myTreeMapObu = ET.parse('../inputs/ID_TRAINS_MAPPING.xml')
+    myTreeMM_ID_MAP = ET.parse('../inputs/MM_ID_MAP.xml')
+    myTreeParam  = ET.parse(param_file_path)
+    myRootParam  = myTreeParam.getroot()
+    myRootMapObu = myTreeMapObu.getroot()
+    
+    #print(myRootMapObu.text)
+
+    train_names = []
+    obu_ids = []
+    period = []
+    analysis = []
+    LLRU_ID = None
+    LLRU_STATE = None
+    ACTIVATE_logs = False
+    ACTIVATE_mm = False
+    ACTIVATE_txt = False
+    
+    trains_tag = myRootParam.find('Trains')
+    period_tag = myRootParam.find('Period')
+    date_tag = period_tag.find('DATE')
+    analysis_tag = myRootParam.find('Analysis')
+    mm_tag = myRootParam.find('Maintenance_Manager')
+    text_tag = myRootParam.find('Text_Message')
+    
+    ACTIVATE_logs = (analysis_tag.find('ACTIVATE')).get('value')
+    ACTIVATE_mm = (mm_tag.find('ACTIVATE')).get('value')
+    ACTIVATE_txt = (text_tag.find('ACTIVATE')).get('value')
+
+    LLRU_STATE = LLRU_STATE_FROM_TEXT((mm_tag.find('MM')).get('state'))
+    LLRU_NAME = (mm_tag.find('MM')).get('LLRU')
+    for map in myTreeMM_ID_MAP.findall('LLRU'):
+        if(LLRU_NAME == map.get('name')):
+            LLRU_ID = int(map.get('id'))
+            break
+    M_DIAG = LLRU_ID+(160 * LLRU_STATE)
+    print('------------',ACTIVATE_logs, ACTIVATE_mm, ACTIVATE_txt)
+    print('------------',LLRU_STATE, LLRU_NAME, LLRU_ID, M_DIAG)
+    for x in trains_tag.findall('OBU'):
+        if x.get('obu_name') == 'all':
+            obu_ids.append('all')
+            train_names.append('all')
+            break
+        else:
+            train_names.append(x.get('obu_name'))
+            for y in myRootMapObu.findall('OBU'):
+                name = y.get('obu_name')
+                if name == x.get('obu_name'):
+                    obu_ids.append(y.get('obu_id'))
+    for x in trains_tag.findall('FLEET'):
+        if x.get('obu_fleet') == 'all':
+            obu_ids.append('all')
+            train_names.append('all')
+            break
+        else:
+            for y in myRootMapObu.findall('OBU'):
+                name = y.get('obu_name')
+                if x.get('obu_fleet') in name:
+                    print(name, y.get('obu_id'))
+                    train_names.append(name)
+                    obu_ids.append(y.get('obu_id'))
+    for x in analysis_tag.findall('LOG'):
+        analysis.append(x.get('type'))
+
+    
+    
+    period1 = date_tag.get('t0')
+    period2 = date_tag.get('tend')
+
+    period.append(datetime.date(int(period1[6:]), int(period1[3:5]), int(period1[0:2])))
+    period.append(datetime.date(int(period2[6:]), int(period2[3:5]), int(period2[0:2])))
+
+    #################################################################################
+
+    #print(obu_ids, train_names)
+    date1_int = int(period[0].strftime('%y%m%d'))
+    date2_int = int(period[1].strftime('%y%m%d'))
+
+    Raw_data_decoded = []
+    i_rmr_mess = 0
+    index_G1 = 0
+    index_G1_end = 0
+
+    listfiles = listdir('../inputs/Raw_Data')
+
+    for filename in listfiles:
+        #filename_date = filename[2:4] + filename[5:7] + filename[8:10]
+        #print(filename_date)
+        filename_date = "".join([filename[2:4] , filename[5:7], filename[8:10]])
+        #print(filename_date)
+        filename_date_int = int(filename_date)
+        if date1_int <= filename_date_int < date2_int:
+            print('File name : ' + filename)
+            #f = open('../inputs/Raw_Data' + '/' + filename, 'r+', encoding='latin-1')
+            f = open("".join(['../inputs/Raw_Data' , '/', filename]), 'r+', encoding='latin-1')
+            lines = f.readlines()
+            for i in range(0, len(lines)):
+                if lines[i].find('<G1>') != -1:
+                    k = i
+                    data_str = lines[i]
+                    while lines[k].find('</G1>') == -1:
+                        k = k + 1
+                        #data_str = data_str + lines[k]
+                        data_str = "".join([data_str ,lines[k]])
+                    index_G1 = data_str.find('<G1>')
+                    index_G1_end = data_str.find('</G1>') + 5
+                    Index = functions.findIndexof(data_str, ';', 8)
+
+                    OBU_LEN = str(int((data_str[(index_G1 + 4):(Index[0])]).encode().hex(), 16))
+                    OBU_VER = data_str[(Index[0] + 1):Index[1]]
+                    OBU_ID = data_str[(Index[1] + 1):Index[2]]
+                    OBU_ACK = data_str[(Index[2] + 1):Index[3]]
+                    OBU_GPS = data_str[(Index[3] + 1):Index[4]]
+                    OBU_DATA_TYPE = data_str[(Index[4] + 1):Index[5]]
+                    OBU_CUSTOM = data_str[(Index[5] + 1):Index[6]]
+                    OBU_DATA_LEN = data_str[(Index[6] + 1):Index[7]]
+                    OBU_DATA = data_str[(Index[7] + 1):index_G1_end - 5]
+
+                    flag = 0
+
+                    
+                    if(ACTIVATE_logs == 'True'):
+                        for an in analysis:
+                            if an == 'COMET_INIT' and OBU_DATA_TYPE == '14':
+                                flag = 1
+                                break
+                            elif an == 'JRU' and OBU_DATA_TYPE == '2':
+                                obu_data_hex = OBU_DATA.encode('latin-1').hex()
+                                tru_nid_message = obu_data_hex[0:2]
+                                if tru_nid_message == '00':
+                                    flag = 1
+                                    break
+                            elif an == 'DRU' and OBU_DATA_TYPE == '2':
+                                obu_data_hex = OBU_DATA.encode('latin-1').hex()
+                                tru_nid_message = obu_data_hex[0:2]
+                                if tru_nid_message == '09':
+                                    flag = 1
+                                    break
+                            elif an == 'RMR_PERIODIC' and OBU_DATA_TYPE == '16':
+                                flag = 1
+                                break
+                        if flag:
+                            for id in obu_ids:
+                                if id == OBU_ID or id == 'all':
+                                    obu_data_hex = OBU_DATA.encode('latin-1').hex()
+                                    Raw_data_decoded.append(
+                                        RMR_Message(OBU_LEN, OBU_VER, OBU_ID, OBU_ACK, OBU_GPS, OBU_DATA_TYPE, OBU_CUSTOM,
+                                                    OBU_DATA_LEN, OBU_DATA))
+                                    gps_field = Raw_data_decoded[i_rmr_mess].decode_GPS()
+                                    Raw_data_decoded[i_rmr_mess].date_for_sort = functions.dateStringToIntConvert(
+                                        gps_field[GPS_DATE])
+                                    obu_time = gps_field[GPS_TIME]
+                                    Raw_data_decoded[i_rmr_mess].time_for_sort = int(obu_time[0:6])
+                                    # Raw_data_decoded[i_rmr_mess].print()
+                                    i_rmr_mess = i_rmr_mess + 1
+                                    break
+                    else:
+                        if((ACTIVATE_mm == 'True')):
+                            for id in obu_ids:
+                                if id == OBU_ID or id == 'all':
+                                    obu_data_hex = OBU_DATA.encode('latin-1').hex()
+                                    TRU_NID_MESSAGE = obu_data_hex[0:2]
+                                    if TRU_NID_MESSAGE == '09':
+                                        obu_data_bin = bit.hexToBin_loop(obu_data_hex)
+                                        DRU_Mess = evc_tru.DRU_Message(obu_data_bin, obu_data_hex)
+                                        DRU_Mess.DRU_decode()
+                                        if((DRU_Mess.DRU_NID_PACKET == 1) and (DRU_Mess.DRU_NID_SOURCE == 7)):
+                                            if(DRU_Mess.DRU_M_DIAG == M_DIAG):
+                                                Raw_data_decoded.append(
+                                                RMR_Message(OBU_LEN, OBU_VER, OBU_ID, OBU_ACK, OBU_GPS, OBU_DATA_TYPE, OBU_CUSTOM,
+                                                            OBU_DATA_LEN, OBU_DATA))
+                                                gps_field = Raw_data_decoded[i_rmr_mess].decode_GPS()
+                                                Raw_data_decoded[i_rmr_mess].date_for_sort = functions.dateStringToIntConvert(
+                                                    gps_field[GPS_DATE])
+                                                obu_time = gps_field[GPS_TIME]
+                                                Raw_data_decoded[i_rmr_mess].time_for_sort = int(obu_time[0:6])
+                                                # Raw_data_decoded[i_rmr_mess].print()
+                                                i_rmr_mess = i_rmr_mess + 1
+                                                break
+                            
+            f.close()
+
+    return Raw_data_decoded
+
+
+def extract_and_decode_rawData_MM(param_file_path):
+
+    ########################## Loading parameters from XML ##########################
+
+    myTreeMapObu = ET.parse(TrainsMapPath)
+    myTreeParam  = ET.parse(param_file_path)
+    myRootParam  = myTreeParam.getroot()
+    myRootMapObu = myTreeMapObu.getroot()
+    print(myRootMapObu.text)
+    Raw_data_decoded = []
+    train_names = []
+    obu_ids = []
+    period = []
+    analysis = []
+    trains_tag = myRootParam.find('Trains')
+    period_tag = myRootParam.find('Period')
+    date_tag = period_tag.find('DATE')
+    analysis_tag = myRootParam.find('Analysis')
+    for x in trains_tag.findall('OBU'):
+        if x.get('obu_name') == 'all':
+            obu_ids.append('all')
+            train_names.append('all')
+            break
+        else:
+            train_names.append(x.get('obu_name'))
+            for y in myRootMapObu.findall('OBU'):
+                name = y.get('obu_name')
+                if name == x.get('obu_name'):
+                    obu_ids.append(y.get('obu_id'))
+    for x in trains_tag.findall('FLEET'):
+        if x.get('obu_fleet') == 'all':
+            obu_ids.append('all')
+            train_names.append('all')
+            break
+        else:
+            for y in myRootMapObu.findall('OBU'):
+                name = y.get('obu_name')
+                if x.get('obu_fleet') in name:
+                    print(name, y.get('obu_id'))
+                    train_names.append(name)
+                    obu_ids.append(y.get('obu_id'))
+    for x in analysis_tag.findall('LOG'):
+        analysis.append(x.get('type'))
+    print(analysis)
+    period1 = date_tag.get('t0')
+    period2 = date_tag.get('tend')
+
+    period.append(datetime.date(int(period1[6:]), int(period1[3:5]), int(period1[0:2])))
+    period.append(datetime.date(int(period2[6:]), int(period2[3:5]), int(period2[0:2])))
+
+    #################################################################################
+
+    #print(obu_ids, train_names)
+    date1_int = int(period[0].strftime('%y%m%d'))
+    date2_int = int(period[1].strftime('%y%m%d'))
+
+    Raw_data_decoded = []
+    i_rmr_mess = 0
+    index_G1 = 0
+    index_G1_end = 0
+
+    listfiles = listdir('../inputs/Raw_Data')
+
+    for filename in listfiles:
+        #filename_date = filename[2:4] + filename[5:7] + filename[8:10]
+        #print(filename_date)
+        filename_date = "".join([filename[2:4] , filename[5:7], filename[8:10]])
+        #print(filename_date)
+        filename_date_int = int(filename_date)
+        if date1_int <= filename_date_int < date2_int:
+            print('File name : ' + filename)
+            #f = open('../inputs/Raw_Data' + '/' + filename, 'r+', encoding='latin-1')
+            f = open("".join(['../inputs/Raw_Data' , '/', filename]), 'r+', encoding='latin-1')
+            lines = f.readlines()
+            len_lines = len(lines)
+            for i in range(0, len_lines):
+                if lines[i].find('<G1>') != -1:
+                    k = i
+                    data_str = lines[i]
+                    while lines[k].find('</G1>') == -1:
+                        k = k + 1
+                        #data_str = data_str + lines[k]
+                        data_str = "".join([data_str ,lines[k]])
+                    index_G1 = data_str.find('<G1>')
+                    index_G1_end = data_str.find('</G1>') + 5
+                    Index = functions.findIndexof(data_str, ';', 8)
+
+                    OBU_LEN = str(int((data_str[(index_G1 + 4):(Index[0])]).encode().hex(), 16))
+                    OBU_VER = data_str[(Index[0] + 1):Index[1]]
+                    OBU_ID = data_str[(Index[1] + 1):Index[2]]
+                    OBU_ACK = data_str[(Index[2] + 1):Index[3]]
+                    OBU_GPS = data_str[(Index[3] + 1):Index[4]]
+                    OBU_DATA_TYPE = data_str[(Index[4] + 1):Index[5]]
+                    OBU_CUSTOM = data_str[(Index[5] + 1):Index[6]]
+                    OBU_DATA_LEN = data_str[(Index[6] + 1):Index[7]]
+                    OBU_DATA = data_str[(Index[7] + 1):index_G1_end - 5]
+
+
+                    for id in obu_ids:
+                        if ((id == OBU_ID or id == 'all') and (OBU_DATA_TYPE == '2')):
+                            obu_data_hex = OBU_DATA.encode('latin-1').hex()
+                            TRU_NID_MESSAGE = obu_data_hex[0:2]
+                            if TRU_NID_MESSAGE == '09':
+                                obu_data_bin = bit.hexToBin_loop(obu_data_hex)
+                                DRU_Mess = evc_tru.DRU_Message(obu_data_bin, obu_data_hex)
+                                DRU_Mess.DRU_decode()
+                                if((DRU_Mess.DRU_NID_PACKET == 1) and (DRU_Mess.DRU_NID_SOURCE == 7)):
+                                    Raw_data_decoded.append(
+                                        RMR_Message(OBU_LEN, OBU_VER, OBU_ID, OBU_ACK, OBU_GPS, OBU_DATA_TYPE, OBU_CUSTOM,
+                                                    OBU_DATA_LEN, OBU_DATA))
+                                    gps_field = Raw_data_decoded[i_rmr_mess].decode_GPS()
+                                    Raw_data_decoded[i_rmr_mess].date_for_sort = functions.dateStringToIntConvert(
+                                        gps_field[GPS_DATE])
+                                    obu_time = gps_field[GPS_TIME]
+                                    Raw_data_decoded[i_rmr_mess].time_for_sort = int(obu_time[0:6])
+                                    # Raw_data_decoded[i_rmr_mess].print()
+                                    i_rmr_mess = i_rmr_mess + 1
+                                    break
+            f.close()
+
+    return Raw_data_decoded
+
+
 def OBU_ID_FROM_OBU_NAME(obu_name):
     obu_id = ''
     for i in range(len(OBU_NAME_ALL)):
@@ -338,4 +589,17 @@ def OBU_NAME_FROM_OBU_ID(obu_id):
         if(obu_id == OBU_ID_ALL[i]):
             obu_name = OBU_NAME_ALL[i]
             break
-    return obu_name  
+    return obu_name
+
+def LLRU_STATE_FROM_TEXT(STATE_NAME):
+    LLRU_STATE = None
+    if(STATE_NAME == 'OK'):
+        LLRU_STATE = 0
+    elif(STATE_NAME == 'WARNING'):
+        LLRU_STATE = 1
+    elif(STATE_NAME == 'DEFECT'):
+        LLRU_STATE = 2
+    elif(STATE_NAME == 'BLOCKING'):
+        LLRU_STATE = 3
+    return LLRU_STATE
+    

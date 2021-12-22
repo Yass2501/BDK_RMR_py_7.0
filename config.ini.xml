@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <Parameters>
 	<Trains>
-		<OBU obu_name="NJ LINT41 653 683"/>
-		<!--FLEET obu_fleet="NJ Desiro"/>
-		<FLEET obu_fleet="NJ LINT41"/>
-		<OBU obu_name="NJ LINT41 653 683"/-->
+		<!-- List of OBUs to track -->
+		<OBU obu_id="0037fa" obu_name="DSB MQ 4116"/>
+		<OBU obu_id="0037fb" obu_name="DSB MQ 4117"/>
+		<OBU obu_id="0037fc" obu_name="DSB MQ 4118"/>
+		<OBU obu_id="0037fd" obu_name="DSB MQ 4119"/>
+		<OBU obu_id="0037fe" obu_name="DSB MQ 4120"/>
+		<OBU obu_id="0037ff" obu_name="DSB MQ 4121"/>
+		<OBU obu_id="003800" obu_name="DSB MQ 4122"/>
+		<OBU obu_id="003801" obu_name="DSB MQ 4123"/>
+		<OBU obu_id="003802" obu_name="DSB MQ 4124"/>
+		<OBU obu_id="003803" obu_name="DSB MQ 4125"/>
+		<OBU obu_id="003804" obu_name="DSB MQ 4126"/>
+		<OBU obu_id="003805" obu_name="DSB MQ 4127"/>
+		<OBU obu_id="003806" obu_name="DSB MQ 4128"/>
+		<OBU obu_id="003807" obu_name="DSB MQ 4129"/>
 	</Trains>
+	
 	<Period>
-		<DATE t0="11-10-2021" tend="13-10-2021"/>
+		<!-- The period of tracking -->
+		<DATE t0="10-09-2021" tend="15-09-2021"/>
 	</Period>
+	
+	<!-- For excel reports -->
 	<Analysis>
+		<ACTIVATE value="True"/>
 		<LOG type="COMET_INIT"/>
-		<LOG type="RMR_PERIODIC"/>
 		<LOG type="JRU"/>
 		<LOG type="DRU"/>
 	</Analysis>
+	
+	<!-- For LLRU state occurences graph -->
+	<!-- state range: OK - WARNING - DEFECT - BLOCKING -->
+	<Maintenance_Manager>
+		<ACTIVATE value="True"/>
+		<MM LLRU="CORE_CH1" state="WARNING"/>
+	</Maintenance_Manager>
+	
+	<Text_Message>
+		<ACTIVATE value="False"/>
+		<TXT id="47"/>  
+	</Text_Message>
 </Parameters>

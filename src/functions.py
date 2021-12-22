@@ -78,15 +78,20 @@ def matrixAllocate(value,sizeX, sizeY):
 
 def findIndexof(line, char, size):
     
-    index = arrayAllocate(1,size)
+    #index = arrayAllocate(1,size)
+    index = []
     j = 0
     for i in range(0,len(line)):
         if((line[i] == ';') and (line[i+1] == ';')):
+        #if(line[i:(i+2)] == ';;'):
             continue
         if((line[i] == char) and (j < size)):
-            index[j] = i
+            index.append(i)
+            #index[j] = i
             j = j + 1
     return index
+    #for count, value in enumerate(values):
+    #index = [i for i, l in enumerate(line) if((line[i:i+2] != ';;') and (l==char) and ())]
 
 def findIndexof2(lines, char, size):
     cnt = 0
